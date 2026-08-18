@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiniProject.Models
 {
-    internal class AudioBook : Book
+    public class AudioBook : Book
     {
         public string NarratorName { get; set; }
         public bool SingleNarration { get; set; }

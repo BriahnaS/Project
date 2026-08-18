@@ -13,7 +13,7 @@ namespace MiniProject.Models
         public string Publisher { get; set; }
         public bool SpecialEditionOrBonusContent { get; set; }
         public string Subplot { get; set; }
-        public string Trope { get; set; }
+        public List<string> Trope { get; set; } = new List<string>();
         public string BookLength { get; set; }
 
         public enum Genre

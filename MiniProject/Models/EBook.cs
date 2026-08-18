@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiniProject.Models
 {
-    internal class EBook : Book
+    public class EBook : Book
     {
         public bool AvailableOnKU { get; set; }
     }
