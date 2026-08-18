@@ -2,7 +2,7 @@
 // 17 Aug ToDo List - create mock data base or find dtabase/api
 string userInput = "";
 
-Menus.WelcomeMenu();
+Menus.DisplayWelcomeMenu();
 Menus.ReadMenuSelection(ref userInput, 1, 2);
 Console.WriteLine($"You have selected {userInput}.");
 Menus.DisplayGenreMenu();

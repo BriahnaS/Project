@@ -32,7 +32,7 @@ namespace MiniProject.Models
         //    return ReadMenuSelection(userInput, min, max);
         //}
 
-        public static void WelcomeMenu()
+        public static void DisplayWelcomeMenu()
         {
             Console.WriteLine("Welcome to Build-A-Rec! What would you like to do? ");
             Console.WriteLine();
