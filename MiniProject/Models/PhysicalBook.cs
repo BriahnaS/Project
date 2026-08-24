@@ -4,10 +4,9 @@ using System.Text;
 
 namespace MiniProject.Models
 {
-    internal class PhysicalBook : Book
+    public class PhysicalBook : Book
     {
         public Type PrintType { get; set; }
-
 
         public enum Type
         {
