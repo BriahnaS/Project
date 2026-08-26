@@ -22,18 +22,9 @@ while (running)
 }
 
 
-
-
-// Find a way to call an action based on user input
-
-
 // Create hardcoded dataset
 
 // - Each option selection will add whatever the user selection was to the list created at the start of the program
 // Build LINQ filtering method that get added to based on user selction
 
-// Build end of selection menu 
-//Console.WriteLine("Please make a selection: ");
-//Console.WriteLine("1. Exit");
-//Console.WriteLine("2. Start Over");
 

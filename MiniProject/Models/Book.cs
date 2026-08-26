@@ -17,18 +17,18 @@ namespace MiniProject.Models
 
         public enum Genre
         {
-            SciFi = 1, 
-            Action = 2,
-            Fantasy = 3,
-            Mystery = 4,
-            Thriller = 5,
-            Romance = 6,
-            Horror = 7,
-            HistoricalFiction = 8,
-            LiteraryFiction = 9,
-            YoungAdult = 10,
-            NewAdult = 11,
-            NonFiction = 12,
+            SciFi, 
+            Action,
+            Fantasy,
+            Mystery,
+            Thriller,
+            Romance,
+            Horror,
+            HistoricalFiction,
+            LiteraryFiction,
+            YoungAdult,
+            NewAdult,
+            NonFiction,
         }
     }
 }
