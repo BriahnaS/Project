@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Linq;
 
 namespace MiniProject.Models
 {
@@ -39,11 +40,12 @@ namespace MiniProject.Models
                     "Rags to Riches",
                     "Fated Love",
                     "Magical World",
-                    "Fobidden Forest",
+                    "Forbidden Forest",
                     "Magic School",
                     "Royal Court / Kingdom",
                     "Secret Lair",
-                    "Magical Objects"
+                    "Magical Objects",
+                    "Bodyguard"
                 }
             },
 
@@ -212,5 +214,19 @@ namespace MiniProject.Models
                 }
             }
         };
+
+        public static string GetCanonical(Book.Genre genre, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return value;
+            if (!TropesByGenre.TryGetValue(genre, out var tropes)) return value.Trim();
+
+            var exact = tropes.FirstOrDefault(t => string.Equals(t?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
+            if (exact != null) return exact;
+
+            static string Normalize(string s) => new string(s?.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray() ?? Array.Empty<char>()).ToLowerInvariant().Trim();
+            var normValue = Normalize(value);
+            var fuzzy = tropes.FirstOrDefault(t => Normalize(t) == normValue);
+            return fuzzy ?? value.Trim();
+        }
     }
 }

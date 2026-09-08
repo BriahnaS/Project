@@ -9,6 +9,8 @@ namespace MiniProject.Models
 {
     public static class Menus
     {
+        // When true, signal to the caller (usually Program) that the user chose to start over
+        public static bool ShouldRestart { get; set; } = false;
         public static int ReadMenuSelection(int min, int max)
         {
             while (true)
@@ -88,6 +90,7 @@ namespace MiniProject.Models
                     Console.WriteLine($"\"{book.Title}\" by {book.Author}");
                 }
             }
+            Console.WriteLine();
             DisplayExitMenu();
         }
 
@@ -115,8 +118,9 @@ namespace MiniProject.Models
                 int choice = ReadMenuSelection(1, index);
                 if (choice <= genres.Count)
                 {
+                    // choice is 1-based while the genres list is 0-based
                     genre = genres[choice - 1];
-                    filteredBooks = filteredBooks.Where(b => b.BookGenre == genres[choice]).ToList();
+                    filteredBooks = filteredBooks.Where(b => b.BookGenre == genres[choice - 1]).ToList();
                     continue;
                 }
                 if (choice == moveToSubplots)
@@ -126,6 +130,7 @@ namespace MiniProject.Models
                 if (choice == findBooks)
                 {
                     FindBook(ref filteredBooks);
+                    return;
                 }
             }
         }
@@ -155,7 +160,8 @@ namespace MiniProject.Models
                 if (choice <= subplots.Count)
                 {
                     string selectedSubplot = subplots[choice - 1];
-                    filteredBooks = filteredBooks.Where(b => b.Subplot == selectedSubplot).ToList();
+                    filteredBooks = filteredBooks
+                        .Where(b => b.Subplot != null && b.Subplot.Any(s => s.Equals(selectedSubplot, StringComparison.OrdinalIgnoreCase))).ToList();
                     continue;
                 }
                 if (choice == moveToTropes)
@@ -165,6 +171,7 @@ namespace MiniProject.Models
                 if (choice == findBooks)
                 {
                     FindBook(ref filteredBooks);
+                    return;
                 }
             }
         }
@@ -176,24 +183,25 @@ namespace MiniProject.Models
                 int index = 1;
                 if (TropeLibrary.TropesByGenre.TryGetValue(genre, out var tropes))
                 {
-                    Console.WriteLine($"Tropes for the {genre} genre: ");
+                    Console.WriteLine($"Tropes for the {genre} genre: \n");
                     foreach (var trope in tropes)
                     {
                         Console.WriteLine($"{index}. {trope}");
                         index++;
                     }
-                    Console.WriteLine($"{index}. Find Books");
+                    Console.WriteLine($"{index}. Find Books\n");
                     int findBookOption = index;
 
                     int choice = ReadMenuSelection(1, index);
                     if (choice <= tropes.Count)
                     {
                         string selectedTrope = tropes[choice - 1];
-                        filteredBooks = filteredBooks.Where(b => b.Trope != null && b.Trope.Contains(selectedTrope)).ToList();
+                        filteredBooks = filteredBooks.Where(b => b.Trope != null && b.Trope.Any(t => t.Equals(selectedTrope,StringComparison.OrdinalIgnoreCase))).ToList();
                     }
                     if (choice == findBookOption)
                     {
                         FindBook(ref filteredBooks);
+                        return;
                     }
                 }
             }
@@ -209,7 +217,7 @@ namespace MiniProject.Models
             var randomBook = allBooksList[random.Next(allBooksList.Count)];
 
             Console.WriteLine("\n--- Your Random Book ---\n");
-            Console.WriteLine($"\"{randomBook.Title}\" by {randomBook.Author}");
+            Console.WriteLine($"\"{randomBook.Title}\" by {randomBook.Author}\n");
 
             DisplayExitMenu();
         }
@@ -228,6 +236,7 @@ namespace MiniProject.Models
                     ShouldRestart = true;
                     return;
                 case 2:
+                    Environment.Exit(0);
                     return;
             }
         }

@@ -11,7 +11,7 @@ namespace MiniProject.Models
         public string Author { get; set; }
         public string Publisher { get; set; }
         public bool SpecialEditionOrBonusContent { get; set; }
-        public string Subplot { get; set; }
+        public List<string> Subplot { get; set; } = new List<string>();
         public List<string> Trope { get; set; } = new List<string>();
         public string BookLength { get; set; }
 
