@@ -224,10 +224,10 @@ namespace MiniProject.Models
             switch (choice)
             {
                 case 1:
+                    // signal to Program.cs that the user wants to start over
+                    ShouldRestart = true;
                     return;
                 case 2:
-                    Console.WriteLine();
-                    Environment.Exit(0);
                     return;
             }
         }
