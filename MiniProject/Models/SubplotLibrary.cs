@@ -156,7 +156,8 @@ namespace MiniProject.Models
                     "Gothic",
                     "Hard",
                     "Horror",
-                    "Humourous"
+                    "Humourous",
+                    "Political Intrigue"
                 } 
             },
 

@@ -45,7 +45,8 @@ namespace MiniProject.Models
                     "Royal Court / Kingdom",
                     "Secret Lair",
                     "Magical Objects",
-                    "Bodyguard"
+                    "Bodyguard",
+                    "Secret Society"
                 }
             },
 
@@ -180,6 +181,10 @@ namespace MiniProject.Models
                     "Super Soldier",
                     "Space Pirate",
                     "Clone / Genetically Engineered Human",
+                    "Opressive Empire",
+                    "Chosen One",
+                    "Prophecy",
+
                 }
             },
 

@@ -7,10 +7,14 @@ using System.Linq;
 
 namespace MiniProject.Models
 {
+    public enum MenuResult
+    {
+        Continue,
+        StartOver,
+        Exit,
+    }
     public static class Menus
     {
-        // When true, signal to the caller (usually Program) that the user chose to start over
-        public static bool ShouldRestart { get; set; } = false;
         public static int ReadMenuSelection(int min, int max)
         {
             while (true)
@@ -42,15 +46,25 @@ namespace MiniProject.Models
             Console.WriteLine();
         }
 
-        public static void EnterBuildARec(ref List<Book> filteredBooks)
+        public static MenuResult EnterBuildARec(ref List<Book> filteredBooks)
         {
             Console.WriteLine("Let's start with the type of book: \n");
             DisplayBookTypes(ref filteredBooks);
-            Book.Genre genre = 0;
-            DisplayGenreMenu(ref filteredBooks, ref genre);
-            DisplaySubplotMenu(ref genre, ref filteredBooks);
-            DisplayTropeMenu(ref genre, ref filteredBooks);
 
+            Book.Genre genre = 0;
+            
+            var genreResult = DisplayGenreMenu(ref filteredBooks, ref genre);
+
+            if (genreResult != MenuResult.Continue)
+                return genreResult;
+
+            var subplotResult = DisplaySubplotMenu(ref genre, ref filteredBooks);
+
+            if (subplotResult != MenuResult.Continue) 
+                return subplotResult;
+
+            var tropeResult = DisplayTropeMenu(ref genre, ref filteredBooks);
+                return tropeResult;
         }
 
         public static void DisplayBookTypes(ref List<Book> filteredBooks)
@@ -74,7 +88,7 @@ namespace MiniProject.Models
             }
         }
 
-        public static void FindBook(ref List<Book> filteredBooks)
+        public static MenuResult FindBook(ref List<Book> filteredBooks)
         {
 
             if (filteredBooks.Count == 0)
@@ -91,10 +105,12 @@ namespace MiniProject.Models
                 }
             }
             Console.WriteLine();
-            DisplayExitMenu();
+
+            return DisplayExitMenu();
+
         }
 
-        public static void DisplayGenreMenu(ref List<Book> filteredBooks, ref Book.Genre genre)
+        public static MenuResult DisplayGenreMenu(ref List<Book> filteredBooks, ref Book.Genre genre)
         {
             Console.WriteLine("Now let's find a genre: \n");
             while (true)
@@ -116,6 +132,7 @@ namespace MiniProject.Models
                 Console.WriteLine();
 
                 int choice = ReadMenuSelection(1, index);
+
                 if (choice <= genres.Count)
                 {
                     // choice is 1-based while the genres list is 0-based
@@ -123,19 +140,19 @@ namespace MiniProject.Models
                     filteredBooks = filteredBooks.Where(b => b.BookGenre == genres[choice - 1]).ToList();
                     continue;
                 }
+
                 if (choice == moveToSubplots)
-                {
-                    return;
-                }
+                    return MenuResult.Continue;
+                
                 if (choice == findBooks)
                 {
-                    FindBook(ref filteredBooks);
-                    return;
+                    var result = FindBook(ref filteredBooks);
+                    return result;
                 }
             }
         }
 
-        public static void DisplaySubplotMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
+        public static MenuResult DisplaySubplotMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
         {
             while (true)
             {
@@ -166,17 +183,17 @@ namespace MiniProject.Models
                 }
                 if (choice == moveToTropes)
                 {
-                    return;
+                    return MenuResult.Continue;
                 }
                 if (choice == findBooks)
                 {
-                    FindBook(ref filteredBooks);
-                    return;
+                    var result = FindBook(ref filteredBooks);
+                    return result;
                 }
             }
         }
 
-        public static void DisplayTropeMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
+        public static MenuResult DisplayTropeMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
         {
             while (true)
             {
@@ -200,14 +217,14 @@ namespace MiniProject.Models
                     }
                     if (choice == findBookOption)
                     {
-                        FindBook(ref filteredBooks);
-                        return;
+                        var result = FindBook(ref filteredBooks);
+                        return result;
                     }
                 }
             }
         }
 
-        public static void FindRandomBook()
+        public static MenuResult FindRandomBook()
         {
             var data = new MockData();
             var random = new Random();
@@ -219,26 +236,24 @@ namespace MiniProject.Models
             Console.WriteLine("\n--- Your Random Book ---\n");
             Console.WriteLine($"\"{randomBook.Title}\" by {randomBook.Author}\n");
 
-            DisplayExitMenu();
+            return DisplayExitMenu();
         }
 
-        public static void DisplayExitMenu()
+
+        public static MenuResult DisplayExitMenu()
         {
             Console.WriteLine("What would you like to do now?\n");
             Console.WriteLine("1. Start Over");
-            Console.WriteLine("2. Exit");
-            Console.WriteLine();
+            Console.WriteLine("2. Exit\n");
+
             int choice = ReadMenuSelection(1, 2);
-            switch (choice)
+
+            if (choice == 1)
             {
-                case 1:
-                    // signal to Program.cs that the user wants to start over
-                    ShouldRestart = true;
-                    return;
-                case 2:
-                    Environment.Exit(0);
-                    return;
+                return MenuResult.StartOver;
             }
+
+            return MenuResult.Exit;
         }
     }
 }

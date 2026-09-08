@@ -11,23 +11,24 @@ while (true)
     Menus.DisplayWelcomeMenu();
     int choice = Menus.ReadMenuSelection(1, 2);
 
-    switch (choice)
+    if (choice == 1)
     {
-        case 1:
-            Menus.EnterBuildARec(ref filteredBooks);
+        var result = Menus.EnterBuildARec(ref filteredBooks);
+
+        if (result == MenuResult.Exit)
             break;
-        case 2:
-            Menus.FindRandomBook();
+
+        if (result == MenuResult.StartOver)
+            continue;
+    }
+    else if (choice == 2)
+    {
+        var result = Menus.FindRandomBook();
+        if (result == MenuResult.Exit)
             break;
     }
 
-    // If any menu signaled a "start over", reset state and restart the main loop
-    if (Menus.ShouldRestart)
-    {
-        Menus.ShouldRestart = false;
-        filteredBooks = allBooks.AllBooks;
-        continue;
-    }
 }
 
+Environment.Exit(0);
 
