@@ -190,20 +190,21 @@ namespace MiniProject.Models
             }
         };
 
-        public static string GetCanonical(Book.Genre genre, string value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return value;
-            if (!SubplotsByGenre.TryGetValue(genre, out var subplots)) return value.Trim();
+        // Used for user input instead of menu selection
+        //public static string GetCanonical(Book.Genre genre, string value)
+        //{
+        //    if (string.IsNullOrWhiteSpace(value)) return value;
+        //    if (!SubplotsByGenre.TryGetValue(genre, out var subplots)) return value.Trim();
 
-            // Exact trimmed, case-insensitive match
-            var exact = subplots.FirstOrDefault(s => string.Equals(s?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
-            if (exact != null) return exact;
+        //    // Exact trimmed, case-insensitive match
+        //    var exact = subplots.FirstOrDefault(s => string.Equals(s?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
+        //    if (exact != null) return exact;
 
-            // Fallback: normalize by removing punctuation and comparing
-            static string Normalize(string s) => new string(s?.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray() ?? Array.Empty<char>()).ToLowerInvariant().Trim();
-            var normValue = Normalize(value);
-            var fuzzy = subplots.FirstOrDefault(s => Normalize(s) == normValue);
-            return fuzzy ?? value.Trim();
-        }
+        //    // Fallback: normalize by removing punctuation and comparing
+        //    static string Normalize(string s) => new string(s?.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray() ?? Array.Empty<char>()).ToLowerInvariant().Trim();
+        //    var normValue = Normalize(value);
+        //    var fuzzy = subplots.FirstOrDefault(s => Normalize(s) == normValue);
+        //    return fuzzy ?? value.Trim();
+        //}
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace MiniProject.Models
 {
-    public enum MenuResult
+    public enum MenuResult // Provide a way to communicate what the user wants to do next after a menu selection. Used in each menu selection method
     {
         Continue,
         StartOver,
@@ -117,18 +117,18 @@ namespace MiniProject.Models
             {
                 int index = 1;
 
-                var genres = Enum.GetValues(typeof(Book.Genre)).Cast<Book.Genre>().ToList();
-                foreach (var g in genres) // Have to reference Book since it's in that class duh
+                var genres = Enum.GetValues(typeof(Book.Genre)).Cast<Book.Genre>().ToList(); // Creates a list of all the genres in the Book.Genre enum
+                foreach (var g in genres) // Displays the genres in a nice menu selection
                 {
                     Console.WriteLine($"{index}. {g}");
                     index++;
                 }
                 Console.WriteLine($"{index}. Move to Subplots");
                 int moveToSubplots = index;
-                index++;
+                index++; // increment to get the next index for the "Find Books" option
 
                 Console.WriteLine($"{index}. Find Books");
-                int findBooks = index;
+                int findBooks = index; // Store the index for the "Find Books" option to use in the choice to move on below
                 Console.WriteLine();
 
                 int choice = ReadMenuSelection(1, index);
@@ -154,6 +154,7 @@ namespace MiniProject.Models
 
         public static MenuResult DisplaySubplotMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
         {
+            Console.WriteLine("The subplot menu will continue for you to select as many as you'd like, then select \"Move to Tropes\" or \"Find Books\" to move on.\n");
             while (true)
             {
                 int index = 1;
@@ -195,6 +196,7 @@ namespace MiniProject.Models
 
         public static MenuResult DisplayTropeMenu(ref Book.Genre genre, ref List<Book> filteredBooks)
         {
+            Console.WriteLine("The Trope menu will continue for you to select as many as you'd like, then select \"Find Books\" to move on.\n");
             while (true)
             {
                 int index = 1;
