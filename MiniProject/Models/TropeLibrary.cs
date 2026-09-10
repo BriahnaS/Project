@@ -220,19 +220,19 @@ namespace MiniProject.Models
             }
         };
 
-        // Used for user input instead of menu selection
-        //public static string GetCanonical(Book.Genre genre, string value)
-        //{
-        //    if (string.IsNullOrWhiteSpace(value)) return value;
-        //    if (!TropesByGenre.TryGetValue(genre, out var tropes)) return value.Trim();
+        //Used for user input instead of menu selection
+        public static string GetCanonical(Book.Genre genre, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return value;
+            if (!TropesByGenre.TryGetValue(genre, out var tropes)) return value.Trim();
 
-        //    var exact = tropes.FirstOrDefault(t => string.Equals(t?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
-        //    if (exact != null) return exact;
+            var exact = tropes.FirstOrDefault(t => string.Equals(t?.Trim(), value.Trim(), StringComparison.OrdinalIgnoreCase));
+            if (exact != null) return exact;
 
-        //    static string Normalize(string s) => new string(s?.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray() ?? Array.Empty<char>()).ToLowerInvariant().Trim();
-        //    var normValue = Normalize(value);
-        //    var fuzzy = tropes.FirstOrDefault(t => Normalize(t) == normValue);
-        //    return fuzzy ?? value.Trim();
-        //}
+            static string Normalize(string s) => new string(s?.Where(c => char.IsLetterOrDigit(c) || char.IsWhiteSpace(c)).ToArray() ?? Array.Empty<char>()).ToLowerInvariant().Trim();
+            var normValue = Normalize(value);
+            var fuzzy = tropes.FirstOrDefault(t => Normalize(t) == normValue);
+            return fuzzy ?? value.Trim();
+        }
     }
 }
