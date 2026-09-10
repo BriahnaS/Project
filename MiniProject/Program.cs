@@ -14,16 +14,29 @@ while (true)
         var result = Menus.EnterBuildARec(ref filteredBooks); // enterbuildarec returns a MenuResult enum value to see what the program should do next (continue, start over, or exit)
 
         if (result == MenuResult.Exit)
+        {
+            Console.WriteLine("Thank you for using Build-A-Rec! Goodbye!");
             break; // breaks out of the loop to end
-
+        }
         if (result == MenuResult.StartOver)
+        {
+            Console.Clear();
             continue; // restarts the loop
+        }
     }
     else if (choice == 2)
     {
         var result = Menus.FindRandomBook();
+        if (result == MenuResult.StartOver)
+        {
+            Console.Clear();
+            continue; // restarts the loop
+        }
         if (result == MenuResult.Exit)
-            break;
+        {
+            Console.WriteLine("Thank you for using Build-A-Rec! Goodbye!");
+            break; 
+        }
     }
 
 }
