@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Linq;
+using MiniProject.Models;
 
-namespace MiniProject.Models
+namespace MiniProject.Data
 {
     public static class TropeLibrary
     {

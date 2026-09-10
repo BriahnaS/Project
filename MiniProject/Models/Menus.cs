@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
+using MiniProject.Data;
 
 namespace MiniProject.Models
 {
