@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BookRecommendationApp.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
