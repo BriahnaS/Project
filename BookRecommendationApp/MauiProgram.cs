@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BookRecommendationApp.API;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 namespace BookRecommendationApp
 {
@@ -18,6 +21,7 @@ namespace BookRecommendationApp
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddHttpClient<CatalogApiClient>();
 
             return builder.Build();
         }
