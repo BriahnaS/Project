@@ -2,11 +2,26 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookRecommendationApp.MainPage"
-             BackgroundColor="{StaticResource CreamPage}">
-    <VerticalStackLayout Padding="20">
-        <Label Text="Theme Loaded!"
-               TextColor="{StaticResource InkSlate}"
-               FontSize="24" />
-    </VerticalStackLayout>
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Secondary}">
 
+    <Grid BackgroundColor="#2F3E46" RowDefinitions=".05*, .1*, .45*, .05*,.05*, .30*">
+        <Label 
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="Welcome to Build-A-Rec"
+            TextColor="#B8B2A6"
+            VerticalOptions="Center" />
+        <Grid Grid.Row="1" Margin="25,10,25,10">
+            <RoundRectangle
+                    CornerRadius="25"
+                    Fill="#52796F"
+                    HeightRequest="45" />
+            <Button
+                Text="Build Your Book"
+                TextColor="#B8B2A6"/>
+        </Grid>
+        
+        
+    </Grid>
 </ContentPage>

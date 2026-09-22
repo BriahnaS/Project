@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using BookRecommendationApp.API;
+using BookRecommendationApp.Services;
 using System.Collections.ObjectModel;
 using BookRecommendationApp.Model.Classes;
 
@@ -10,11 +10,11 @@ namespace BookRecommendationApp.ViewModel
 {
     public class CatalogViewModel : INotifyPropertyChanged
     {
-        private readonly CatalogApiClient _api;
+        private readonly CatalogService _api;
 
         public ObservableCollection<Title> Titles { get; set; } = new();
 
-        public CatalogViewModel(CatalogApiClient api)
+        public CatalogViewModel(CatalogService api)
         {
             _api = api;
             LoadTitles();
