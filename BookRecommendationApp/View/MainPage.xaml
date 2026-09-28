@@ -5,7 +5,7 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource Secondary}">
 
-    <Grid BackgroundColor="#2F3E46" RowDefinitions=".05*, .1*, .45*, .05*,.05*, .30*">
+    <Grid BackgroundColor="#2F3E46" RowDefinitions="Auto, Auto, *">
         <Label 
             FontSize="16"
             HorizontalOptions="Center"
@@ -18,10 +18,26 @@
                     Fill="#52796F"
                     HeightRequest="45" />
             <Button
-                Text="Build Your Book"
-                TextColor="#B8B2A6"/>
+                Text="Find Random Book"
+                TextColor="#B8B2A6"
+                Command="{Binding LoadRandomBookCommand}"/>
         </Grid>
-        
+        <Grid Grid.Row="2" Margin="25,10,25,10">
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    Text="{Binding RandomBook.Title}"
+                    FontSize="20"
+                    TextColor="#B8B2A6"
+                    HorizontalOptions="Center" />
+                <CollectionView ItemsSource="{Binding RandomBook.Authors}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Grid>
         
     </Grid>
 </ContentPage>

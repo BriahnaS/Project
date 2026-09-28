@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
-using BookRecommendationApp.Services;
+using BookRecommendationApp.ViewModel;
 
 namespace BookRecommendationApp
 {
@@ -23,6 +23,8 @@ namespace BookRecommendationApp
     		builder.Logging.AddDebug();
 #endif
             builder.Services.AddHttpClient<CatalogService>();
+            builder.Services.AddTransient<RandomBookViewModel>();
+            builder.Services.AddTransient<MainPage>();
 
             return builder.Build();
         }

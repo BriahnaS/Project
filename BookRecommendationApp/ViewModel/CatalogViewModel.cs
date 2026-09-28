@@ -12,21 +12,21 @@ namespace BookRecommendationApp.ViewModel
     {
         private readonly CatalogService _api;
 
-        public ObservableCollection<Title> Titles { get; set; } = new();
+        public ObservableCollection<BookDto> Books { get; set; } = new();
 
         public CatalogViewModel(CatalogService api)
         {
             _api = api;
-            LoadTitles();
+            LoadBooks();
         }
 
-        private async void LoadTitles()
+        private async void LoadBooks()
         {
-            var titles = await _api.GetTitlesAsync();
-            Titles.Clear();
+            var books = await _api.GetBooksAsync();
+            Books.Clear();
 
-            foreach (var t in titles)
-                Titles.Add(t);
+            foreach (var b in books)
+                Books.Add(b);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

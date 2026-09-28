@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using BookRecommendationApp.Model.Classes;
+using BookRecommendationApp.ViewModel;
 
 namespace BookRecommendationApp.Services
 {
@@ -15,12 +18,14 @@ namespace BookRecommendationApp.Services
             _client = client;
         }
 
-        public async Task<List<Title>> GetTitlesAsync()
+        public async Task<List<BookDto>> GetBooksAsync()
         {
-            var response = await _client.GetAsync("https://localhost:7003/api/catalog");
-            var json = await response.Content.ReadAsStringAsync();
+            return await _client.GetFromJsonAsync<List<BookDto>>("https://localhost:7003/api/catalog");
+        }
 
-            return JsonSerializer.Deserialize<List<Title>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        public async Task<BookDto> GetRandomBookAsync()
+        {
+            return await _client.GetFromJsonAsync<BookDto>("https://localhost:7003/api/catalog/random");
         }
     }
 }
