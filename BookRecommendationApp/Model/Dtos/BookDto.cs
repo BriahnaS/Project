@@ -9,5 +9,6 @@ namespace BookRecommendationApp.Model.Classes
         public int BookId { get; set; }
         public string Title { get; set; }
         public List<string> Authors { get; set; }
+        public string AuthorList => string.Join(", ", Authors);
     }
 }

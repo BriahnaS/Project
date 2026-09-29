@@ -11,5 +11,19 @@ namespace BookRecommendationApp
             InitializeComponent();
             BindingContext = vm;
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (BindingContext is RandomBookViewModel vm)
+            {
+
+                vm.ScrollAction = async (index) =>
+                {
+                    await CarouselBooks.ScrollTo(index, position: ScrollToPosition.Center, animate: true);
+                };
+            }
+        }
     }
 }

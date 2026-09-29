@@ -1,18 +1,25 @@
 ﻿using BookRecommendationApp.Services;
 using BookRecommendationApp.Model.Classes;
+using BookRecommendationApp.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace BookRecommendationApp.ViewModel
 {
     public class RandomBookViewModel : INotifyPropertyChanged
     {
         private readonly CatalogService _catalog;
-        public ICommand LoadRandomBookCommand { get; }
+
+        public ObservableCollection<BookDto> CarouselBooks { get; } = new();
+        public Action<int> ScrollAction { get; set; } // delegate so the VM can trigger UI scrolling
+
+        public ICommand AnimateRandomBookCommand { get; }
+
         private BookDto _randomBook;
 
         public BookDto RandomBook { get => _randomBook; 
@@ -27,7 +34,7 @@ namespace BookRecommendationApp.ViewModel
         {
             _catalog = catalog;
 
-            LoadRandomBookCommand = new Command(async () => await LoadRandomBookAsync());
+            AnimateRandomBookCommand = new Command(async () => await AnimateRandomBookAsync());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,9 +44,26 @@ namespace BookRecommendationApp.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task LoadRandomBookAsync()
+        public async Task AnimateRandomBookAsync()
         {
-            RandomBook = await _catalog.GetRandomBookAsync();
+            CarouselBooks.Clear();
+
+            for (int i= 0; i < 12; i++)
+            {
+                CarouselBooks.Add(FakeBookGenerator.GetFakeBook());
+            }
+
+            for (int i=0; i < CarouselBooks.Count; i++)
+            {
+                ScrollAction?.Invoke(i);
+                await Task.Delay(80);
+            }
+
+            var realBook = await _catalog.GetRandomBookAsync();
+
+            CarouselBooks.Add(realBook);
+
+            ScrollAction?.Invoke(CarouselBooks.Count - 1);
         }
     }
 }

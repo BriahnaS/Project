@@ -27,5 +27,20 @@ namespace BookRecommendationApp.Services
         {
             return await _client.GetFromJsonAsync<BookDto>("https://localhost:7003/api/catalog/random");
         }
+
+        public async Task<List<GenreDto>> GetGenresAsync()
+        {
+            return await _client.GetFromJsonAsync<List<GenreDto>>("https://localhost:7003/api/catalog/genres");
+        }
+
+        public async Task<List<SubplotDto>> GetGenreSubplotsAsync(int genreId)
+        {
+            return await _client.GetFromJsonAsync<List<SubplotDto>>($"https://localhost:7003/api/catalog/genres/{genreId}/subplots");
+        }
+
+        public async Task<List<TropeDto>> GetGenreTropesAsync(int genreId)
+        {
+            return await _client.GetFromJsonAsync<List<TropeDto>>($"https://localhost:7003/api/catalog/genres/{genreId}/tropes");
+        }
     }
 }
