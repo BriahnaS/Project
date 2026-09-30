@@ -20,27 +20,29 @@ namespace BookRecommendationApp.Services
 
         public async Task<List<BookDto>> GetBooksAsync()
         {
-            return await _client.GetFromJsonAsync<List<BookDto>>("https://localhost:7003/api/catalog");
+            return await _client.GetFromJsonAsync<List<BookDto>>("books");
         }
 
         public async Task<BookDto> GetRandomBookAsync()
         {
-            return await _client.GetFromJsonAsync<BookDto>("https://localhost:7003/api/catalog/random");
+            return await _client.GetFromJsonAsync<BookDto>("random");
         }
 
         public async Task<List<GenreDto>> GetGenresAsync()
         {
-            return await _client.GetFromJsonAsync<List<GenreDto>>("https://localhost:7003/api/catalog/genres");
+            return await _client.GetFromJsonAsync<List<GenreDto>>("genres");
         }
 
-        public async Task<List<SubplotDto>> GetGenreSubplotsAsync(int genreId)
+        public async Task<List<SubplotDto>> GetGenreSubplotsAsync(List<int> genreIds)
         {
-            return await _client.GetFromJsonAsync<List<SubplotDto>>($"https://localhost:7003/api/catalog/genres/{genreId}/subplots");
+            var response = await _client.PostAsJsonAsync("genres/subplots", genreIds);
+            return await response.Content.ReadFromJsonAsync<List<SubplotDto>>();
         }
 
-        public async Task<List<TropeDto>> GetGenreTropesAsync(int genreId)
+        public async Task<List<TropeDto>> GetGenreTropesAsync(List<int> genreIds)
         {
-            return await _client.GetFromJsonAsync<List<TropeDto>>($"https://localhost:7003/api/catalog/genres/{genreId}/tropes");
+            var response = await _client.PostAsJsonAsync("genres/tropes", genreIds);
+            return await response.Content.ReadFromJsonAsync<List<TropeDto>>();
         }
     }
 }

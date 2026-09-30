@@ -15,13 +15,22 @@ namespace BookRecommendationApp.ViewModel
     {
         private readonly CatalogService _catalog;
 
-        public ObservableCollection<BookDto> CarouselBooks { get; } = new();
-        public Action<int> ScrollAction { get; set; } // delegate so the VM can trigger UI scrolling
+        public Action<string, List<string>> FlipAction { get; set; }
 
         public ICommand AnimateRandomBookCommand { get; }
 
-        private BookDto _randomBook;
+        private bool _isFlipCardVisible;
+        public bool IsFlipCardVisible
+        {
+            get => _isFlipCardVisible;
+            set
+            {
+                _isFlipCardVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private BookDto _randomBook;
         public BookDto RandomBook { get => _randomBook; 
             set
             {
@@ -35,10 +44,10 @@ namespace BookRecommendationApp.ViewModel
             _catalog = catalog;
 
             AnimateRandomBookCommand = new Command(async () => await AnimateRandomBookAsync());
+            IsFlipCardVisible = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -46,24 +55,20 @@ namespace BookRecommendationApp.ViewModel
 
         public async Task AnimateRandomBookAsync()
         {
-            CarouselBooks.Clear();
+            IsFlipCardVisible = true;
 
             for (int i= 0; i < 12; i++)
             {
-                CarouselBooks.Add(FakeBookGenerator.GetFakeBook());
-            }
-
-            for (int i=0; i < CarouselBooks.Count; i++)
-            {
-                ScrollAction?.Invoke(i);
+                var fake = FakeBookGenerator.GetFakeBook();
+                FlipAction?.Invoke(fake.Title, fake.Authors);
                 await Task.Delay(80);
             }
 
             var realBook = await _catalog.GetRandomBookAsync();
+            FlipAction?.Invoke(realBook.Title, realBook.Authors);
 
-            CarouselBooks.Add(realBook);
+            RandomBook = realBook;
 
-            ScrollAction?.Invoke(CarouselBooks.Count - 1);
         }
     }
 }

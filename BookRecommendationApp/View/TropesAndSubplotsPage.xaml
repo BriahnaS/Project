@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+             x:Class="BookRecommendationApp.View.TropesAndSubplotsPage"
+             x:Name="TropesAndSubplotsPageRoot">
+    <Grid>
+        <VerticalStackLayout>
+            <Label 
+                Text="Tropes" 
+                FontSize="24" 
+                TextColor="Black"
+                HorizontalOptions="Center"/>
+
+            <CollectionView ItemsSource="{Binding Tropes}"
+                            SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:Border StrokeThickness="0"
+                            Background="#354F52"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="10"
+                            Margin="5">
+
+                            <controls:Border.Style>
+                                <Style TargetType="controls:Border">
+                                    <Setter Property="Background" Value="#354F52" />
+
+                                    <Style.Triggers>
+                                        <DataTrigger TargetType="controls:Border"
+                                                     Binding="{Binding IsSelected}"
+                                                     Value="True">
+                                            <Setter Property="Background" Value="#52796F" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:Border.Style>
+
+                            <Grid>
+                                <Label Text="{Binding Name}"
+                                   FontSize="18"
+                                   TextColor="#CAD2C5" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding BindingContext.SelectTropeCommand, Source={x:Reference TropesAndSubplotsPageRoot}}"
+                                        CommandParameter="{Binding}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </controls:Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label 
+            Text="Subplots" FontSize="24" TextColor="Black" />
+            <CollectionView ItemsSource="{Binding Subplots}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Name}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -10,15 +10,16 @@ using System.Windows.Input;
 
 namespace BookRecommendationApp.ViewModel
 {
-    public class GenreSelectionViewModel : INotifyPropertyChanged
+    public class GenresViewModel : INotifyPropertyChanged
     {
         private readonly CatalogService _catalogService;
+        public CatalogService CatalogService => _catalogService;
 
         public ObservableCollection<GenreDto> Genres { get; } = new();
         public ObservableCollection<GenreDto> SelectedGenres { get; } = new();
         public ICommand SelectGenreCommand { get; }
 
-        public GenreSelectionViewModel(CatalogService catalogService)
+        public GenresViewModel(CatalogService catalogService)
         {
             _catalogService = catalogService;
             SelectGenreCommand = new Command<GenreDto>(OnGenreSelected);
@@ -45,10 +46,12 @@ namespace BookRecommendationApp.ViewModel
 
         private void OnGenreSelected(GenreDto genre)
         {
-            if (SelectedGenres.Contains(genre))
-                SelectedGenres.Remove(genre);
-            else
+            genre.IsSelected = !genre.IsSelected;
+
+            if (genre.IsSelected)
                 SelectedGenres.Add(genre);
+            else
+                SelectedGenres.Remove(genre);
         }
     }
 }

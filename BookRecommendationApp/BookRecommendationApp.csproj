@@ -79,13 +79,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\CatalogPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Using Include="Microsoft.Extensions.Http" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Using Include="Microsoft.Extensions.Http" />
+	  <Compile Update="View\GenresPage.xaml.cs">
+	    <DependentUpon>GenresPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\GenresPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TropesAndSubplotsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
