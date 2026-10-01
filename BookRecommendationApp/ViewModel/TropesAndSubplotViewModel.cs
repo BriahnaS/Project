@@ -1,14 +1,16 @@
-﻿using BookRecommendationApp.Services;
-using BookRecommendationApp.Model.Classes;
+﻿using BookRecommendationApp.Model.Classes;
+using BookRecommendationApp.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows.Input;
 
 namespace BookRecommendationApp.ViewModel
 {
-    public class TropesAndSubplotViewModel
+    public class TropesAndSubplotViewModel : INotifyPropertyChanged
     {
         private readonly CatalogService _catalogService;
         private List<GenreDto> _selectedGenres;
@@ -28,6 +30,13 @@ namespace BookRecommendationApp.ViewModel
             _catalogService = catalogService;
             SelectTropeCommand = new Command<TropeDto>(OnTropeSelected);
             SelectSubplotCommand = new Command<SubplotDto>(OnSubplotSelected);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void SetSelectedGenres(List<GenreDto> genres)
         {

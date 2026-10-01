@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using BookRecommendationApp.Model;
 using BookRecommendationApp.Model.Classes;
 using BookRecommendationApp.ViewModel;
 
@@ -43,6 +44,19 @@ namespace BookRecommendationApp.Services
         {
             var response = await _client.PostAsJsonAsync("genres/tropes", genreIds);
             return await response.Content.ReadFromJsonAsync<List<TropeDto>>();
+        }
+
+        public async Task<List<BookDto>> SearchBooksAsync(BookSearchRequest request)
+        {
+            var response = await _client.PostAsJsonAsync("search", request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var body = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Error searching books: {response.StatusCode}. Response body: {body}");
+            }
+
+            return await response.Content.ReadFromJsonAsync<List<BookDto>>();
         }
     }
 }

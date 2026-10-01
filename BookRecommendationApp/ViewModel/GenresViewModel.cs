@@ -53,5 +53,6 @@ namespace BookRecommendationApp.ViewModel
             else
                 SelectedGenres.Remove(genre);
         }
+
     }
 }

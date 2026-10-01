@@ -33,6 +33,8 @@ namespace BookRecommendationApp
             builder.Services.AddTransient<GenresPage>();
             builder.Services.AddTransient<TropesAndSubplotsPage>();
             builder.Services.AddTransient<TropesAndSubplotViewModel>();
+            builder.Services.AddTransient<BookResultsPage>();
+            builder.Services.AddTransient<BookResultsViewModel>();
 
             return builder.Build();
         }
