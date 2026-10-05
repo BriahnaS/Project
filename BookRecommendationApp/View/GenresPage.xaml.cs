@@ -6,23 +6,37 @@ namespace BookRecommendationApp.View;
 
 public partial class GenresPage : ContentPage
 {
-	private readonly GenresViewModel _vm;
-	private readonly IServiceProvider _serviceProvider;
-	public GenresPage(GenresViewModel vm, IServiceProvider serviceProvider)
-	{
-		InitializeComponent();
-		_vm = vm;
-		_serviceProvider = serviceProvider;
-		BindingContext = _vm;
+    private readonly GenresViewModel _vm;
+    private readonly IServiceProvider _serviceProvider;
+    public GenresPage(GenresViewModel vm, IServiceProvider serviceProvider)
+    {
+        InitializeComponent();
+        _vm = vm;
+        _serviceProvider = serviceProvider;
+        BindingContext = _vm;
 
-		Loaded += async (_, _) => await _vm.LoadGenresAsync();
-	}
+        Loaded += async (_, _) =>
+        {
+            try
+            {
+                await _vm.LoadGenresAsync();
+            }
+            catch (HttpRequestException ex)
+            {
+                await DisplayAlertAsync("Network Error", "Cannot reach the server. Check your connection", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlertAsync("Error", $"An error occurred: {ex.Message}", "OK");
+            }
+        };
+    }
 
     private async void OnNextClicked(object sender, EventArgs e)
     {
         var nextPage = _serviceProvider.GetRequiredService<TropesAndSubplotsPage>();
 
-		nextPage.ViewModel.SetSelectedGenres(_vm.SelectedGenres.ToList());
+        nextPage.ViewModel.SetSelectedGenres(_vm.SelectedGenres.ToList());
 
         await Navigation.PushAsync(nextPage);
     }

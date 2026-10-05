@@ -31,9 +31,22 @@ namespace BookRecommendationApp.Services
 
         public async Task<List<GenreDto>> GetGenresAsync()
         {
-            return await _client.GetFromJsonAsync<List<GenreDto>>("genres");
-        }
+            try
+            {
+                var response = await _client.GetAsync("genres");
 
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception($"Error fetching genres: {response.StatusCode}.");
+
+                return await response.Content.ReadFromJsonAsync<List<GenreDto>>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GetGenresAsync failed: {ex.Message}");
+
+                throw;
+            }   
+        }
         public async Task<List<SubplotDto>> GetGenreSubplotsAsync(List<int> genreIds)
         {
             var response = await _client.PostAsJsonAsync("genres/subplots", genreIds);
