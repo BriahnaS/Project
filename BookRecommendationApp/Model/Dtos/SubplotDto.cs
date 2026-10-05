@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookRecommendationApp.Model.Classes
 {
-    public class SubplotDto
+    public class SubplotDto : INotifyPropertyChanged
     {
         public int SubplotId { get; set; }
         public string Name { get; set; }

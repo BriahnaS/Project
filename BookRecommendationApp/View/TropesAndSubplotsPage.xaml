@@ -97,13 +97,23 @@
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding BindingContext.SelectSubplotCommand, Source={x:Reference TropesAndSubplotsPageRoot}}"
-                                            CommandParameter="{Binding}"/>  
+                                            CommandParameter="{Binding}"/>
                                     </Grid.GestureRecognizers>
                                 </Grid>
                             </controls:Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                
+                <Button Text="Find Your Books"
+                CornerRadius="10"
+                BackgroundColor="#52796F"
+                TextColor="White"
+                Padding="15,10"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Clicked="FindBooksClicked" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

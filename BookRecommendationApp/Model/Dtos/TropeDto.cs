@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookRecommendationApp.Model.Classes
 {
-    public class TropeDto
+    public class TropeDto : INotifyPropertyChanged
     {
         public int TropeId { get; set; }
         public string Name { get; set; }

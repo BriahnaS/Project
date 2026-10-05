@@ -18,7 +18,7 @@ namespace BookRecommendationApp.ViewModel
         public ObservableCollection<TropeDto> Tropes { get; } = new();
         public ObservableCollection<SubplotDto> Subplots { get; } = new();
 
-
+        public ObservableCollection<GenreDto> SelectedGenres { get; } = new();
         public ObservableCollection<TropeDto> SelectedTropes { get; } = new();
         public ObservableCollection<SubplotDto> SelectedSubplots { get; } = new();
 
