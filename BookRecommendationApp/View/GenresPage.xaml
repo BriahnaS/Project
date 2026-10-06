@@ -5,79 +5,93 @@
              x:Class="BookRecommendationApp.View.GenresPage"
              x:Name="GenresPageRoot"
              BackgroundColor="#F7F3E9">
-    <Grid>
-        <VerticalStackLayout Padding="20" Spacing="10">
-            <Label 
-            Text="Select your desired genres!"
-            FontSize="28"
-            HorizontalOptions="Center" 
-            TextColor="Black"/>
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="10">
 
-            <CollectionView ItemsSource="{Binding Genres}"
-                        SelectionMode="None">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
-                </CollectionView.ItemsLayout>
+                <Label 
+                    Text="Select your desired genres!"
+                    FontSize="28"
+                    HorizontalOptions="Center" 
+                    TextColor="Black"/>
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <controls:Border StrokeThickness="0"
-                            Background="#354F52"
-                            StrokeShape="RoundRectangle 10"
-                            Padding="10"
-                            Margin="5">
+                <CollectionView ItemsSource="{Binding Genres}"
+                                SelectionMode="None"
+                                HorizontalOptions="Center">
+                    
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" 
+                                           ItemSpacing="8" />
+                    </CollectionView.ItemsLayout>
 
-                            <controls:Border.Style>
-                                <Style TargetType="controls:Border">
-                                    <Setter Property="Background" Value="#354F52" />
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:Border 
+                                StrokeThickness="0"
+                                Background="#354F52"
+                                StrokeShape="RoundRectangle 20"
+                                Padding="8,4"
+                                Margin="4">
 
-                                    <Style.Triggers>
-                                        <DataTrigger TargetType="controls:Border"
-                                                 Binding="{Binding IsSelected}"
-                                                 Value="True">
-                                            <Setter Property="Background" Value="#52796F" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </controls:Border.Style>
+                                <controls:Border.Style>
+                                    <Style TargetType="controls:Border">
+                                        <Setter Property="Background" Value="#354F52" />
+                                        <Setter Property="HeightRequest" Value="40" />
+                                        <Setter Property="MinimumWidthRequest" Value="80" />
 
-                            <Grid>
-                                <Label Text="{Binding Name}"
-                                   FontSize="18"
-                                   TextColor="#CAD2C5" />
+                                        <Style.Triggers>
+                                            <DataTrigger TargetType="controls:Border"
+                                                         Binding="{Binding IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Background" Value="#52796F" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:Border.Style>
 
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                    Command="{Binding BindingContext.SelectGenreCommand, Source={x:Reference GenresPageRoot}}"
-                                    CommandParameter="{Binding}"/>
-                                </Grid.GestureRecognizers>
-                            </Grid>
-                        </controls:Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                <Grid>
+                                    <Label Text="{Binding Name}"
+                                       FontSize="14"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       TextColor="#CAD2C5" />
 
-        </VerticalStackLayout>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding BindingContext.SelectGenreCommand, Source={x:Reference GenresPageRoot}}"
+                                            CommandParameter="{Binding}"/>
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </controls:Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
+            </VerticalStackLayout>
+        </ScrollView>
 
-        <Button Text="Find Your Books"
+        <Grid Grid.Row="1" ColumnDefinitions="*,*">
+            <Button 
+                Grid.Column="0"
+                Text="Find Your Books"
                 CornerRadius="10"
                 BackgroundColor="#52796F"
                 TextColor="White"
                 Padding="15,10"
+                Margin="20"
                 HorizontalOptions="Start"
-                VerticalOptions="End"
-                Margin="20"
                 Clicked="FindBooksByGenresClicked" />
-        
-        <Button Text="Next"
+
+            <Button 
+                Grid.Column="1"
+                Text="Next"
                 CornerRadius="10"
                 BackgroundColor="#52796F"
                 TextColor="White"
                 Padding="15,10"
-                HorizontalOptions="End"
-                VerticalOptions="End"
                 Margin="20"
+                HorizontalOptions="End"
                 Clicked="OnNextClicked" />
+        </Grid>
     </Grid>
 </ContentPage>

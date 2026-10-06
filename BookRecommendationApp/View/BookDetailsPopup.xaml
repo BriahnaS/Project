@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="BookRecommendationApp.View.BookDetailsPopup"
+    x:Name="BookDetailsPopupRoot">
+
+    <Grid VerticalOptions="Center" HorizontalOptions="Center" >
+
+        <Grid
+            Padding="20"
+            BackgroundColor="White"
+            WidthRequest="600"
+            HeightRequest="700"
+            RowDefinitions="*"
+            ColumnDefinitions="200, *"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <Image Grid.Column="0" 
+                   Source="{Binding CoverImageUrl}"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+                   Aspect="AspectFit" />
+
+
+            <Grid Grid.Column="1"
+                  RowDefinitions="Auto, Auto, *, Auto"
+                  RowSpacing="10"
+                  Padding="15" >
+
+                <Label Grid.Row="0" 
+                       Text="{Binding Title}"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="Black" />
+
+                <Label Grid.Row="1" 
+                       Text="{Binding AuthorList}"
+                       FontSize="16"
+                       TextColor="Gray" />
+
+                <ScrollView Grid.Row="2">
+                    <Label Text="{Binding Description}"
+                           FontSize="14"
+                           TextColor="Black" />
+                </ScrollView>
+
+                <Button Grid.Row="3" 
+                        Text="Close"
+                        Clicked="OnCloseClicked" 
+                        HorizontalOptions="End"
+                        VerticalOptions="End"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

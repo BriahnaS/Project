@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using BookRecommendationApp.ViewModel;
 using BookRecommendationApp.View;
+using CommunityToolkit.Maui;
 
 namespace BookRecommendationApp
 {
@@ -14,6 +15,7 @@ namespace BookRecommendationApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
