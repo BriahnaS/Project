@@ -28,35 +28,7 @@
             CornerRadius="20"
             BackgroundColor="#52796F"
             TextColor="#B8B2A6" 
-            Command="{Binding AnimateRandomBookCommand}"/>
+            Clicked="OnRandomBookClicked"/>
 
-        <Border
-            x:Name="FlipCard"
-            Grid.Row="3"
-            IsVisible="{Binding IsFlipCardVisible}"
-            StrokeThickness="0"
-            Background="#354F52"
-            StrokeShape="RoundRectangle 20"
-            Padding="20"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            WidthRequest="300"
-            HeightRequest="200">
-
-            <VerticalStackLayout x:Name="FlipContent" Spacing="6" HorizontalOptions="Center">
-                <Label 
-                    x:Name="FlipTitle"
-                    Text="Random Book" 
-                    FontSize="22"
-                    TextColor="#CAD2C5"
-                    HorizontalOptions="Center" />
-                <Label 
-                    x:Name="FlipAuthor"
-                    Text="" 
-                    FontSize="16"
-                    TextColor="#84A98C"
-                    HorizontalOptions="Center" />
-            </VerticalStackLayout>
-        </Border>
     </Grid>
 </ContentPage>

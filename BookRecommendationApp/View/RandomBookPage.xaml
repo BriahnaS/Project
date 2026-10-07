@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookRecommendationApp.View.RandomBookPage"
+             x:Name="RandomBookPageRoot">
+    <Grid Padding="20" RowDefinitions="Auto,*" RowSpacing="20">
+
+        <Label Text="Your Random Book"
+                 FontSize="28"
+                 HorizontalOptions="Center"
+                 TextColor="#CAD2C5"/>
+
+        <Border x:Name="FlipCard"
+                Grid.Row="1"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20"
+                Padding="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Background="#2B303A"
+                Stroke="#CAD2C5">
+
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Image x:Name="FlipCover"
+                       HeightRequest="140"
+                       WidthRequest="210"
+                       Aspect="AspectFill"
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       Margin="0,0,0,10"/>
+                
+                <Label x:Name="FlipTitle" 
+                       FontSize="22"
+                       TextColor="#CAD2C5"
+                       HorizontalOptions="Center"/>
+                
+                <Label x:Name="FlipAuthor"
+                       FontSize="16"
+                       TextColor="#84A98C"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

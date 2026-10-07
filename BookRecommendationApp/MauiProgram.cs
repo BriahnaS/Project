@@ -31,6 +31,7 @@ namespace BookRecommendationApp
                 client.BaseAddress = new Uri("https://localhost:7003/api/catalog/");
             });
             builder.Services.AddTransient<RandomBookViewModel>();
+            builder.Services.AddTransient<RandomBookPage>();
 
             builder.Services.AddTransient<MainPage>();
 

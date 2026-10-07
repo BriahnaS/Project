@@ -19,17 +19,6 @@ namespace BookRecommendationApp.ViewModel
 
         public ICommand AnimateRandomBookCommand { get; }
 
-        private bool _isFlipCardVisible;
-        public bool IsFlipCardVisible
-        {
-            get => _isFlipCardVisible;
-            set
-            {
-                _isFlipCardVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
         private BookDto _randomBook;
         public BookDto RandomBook { get => _randomBook; 
             set
@@ -44,7 +33,11 @@ namespace BookRecommendationApp.ViewModel
             _catalog = catalog;
 
             AnimateRandomBookCommand = new Command(async () => await AnimateRandomBookAsync());
-            IsFlipCardVisible = false;
+        }
+
+        public async Task LoadRandomBookAsync()
+        {
+            RandomBook = await _catalog.GetRandomBookAsync();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,7 +48,6 @@ namespace BookRecommendationApp.ViewModel
 
         public async Task AnimateRandomBookAsync()
         {
-            IsFlipCardVisible = true;
 
             for (int i= 0; i < 12; i++)
             {
