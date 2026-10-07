@@ -15,25 +15,25 @@
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 20"
                 Padding="20"
-                MaximumHeightRequest="600"
-                MaximumWidthRequest="500"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Background="#2B303A"
                 Stroke="#CAD2C5">
 
             <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
-                <Image x:Name="FlipCover"
-                       Aspect="AspectFill"
-                       HorizontalOptions="Center" 
-                       VerticalOptions="Center"
-                       Margin="0,0,0,10"/>
-                
+                <Grid HeightRequest="400">
+                    <Image x:Name="FlipCover"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           Margin="0,0,0,10"/>
+                </Grid>
+
                 <Label x:Name="FlipTitle" 
                        FontSize="22"
                        TextColor="#CAD2C5"
                        HorizontalOptions="Center"/>
-                
+
                 <Label x:Name="FlipAuthor"
                        FontSize="16"
                        TextColor="#84A98C"
