@@ -1,26 +1,20 @@
 using BookRecommendationApp.ViewModel;
 using BookRecommendationApp.Model;
+using BookRecommendationApp.Services;
 namespace BookRecommendationApp.View;
 
 public partial class BookResultsPage : ContentPage
 {
     private readonly UserSelectionState _state;
     public BookResultsViewModel ViewModel { get; }
-    private readonly GenresViewModel _genresViewModel;
-    private readonly TropesAndSubplotViewModel _tropesAndSubplotViewModel;
-    public BookResultsPage()
-	{
-		InitializeComponent();
-        ViewModel = new BookResultsViewModel();
-        BindingContext = ViewModel;
-    }
-    public BookResultsPage(BookResultsViewModel vm, GenresViewModel genresVm, TropesAndSubplotViewModel tropesAndSubplotVm, UserSelectionState state)
+    private readonly IServiceProvider _serviceProvider;
+
+    public BookResultsPage(BookResultsViewModel vm, UserSelectionState state, IServiceProvider serviceProvider)
 	{
 		InitializeComponent();
 		ViewModel = vm;
-        _genresViewModel = genresVm;
-        _tropesAndSubplotViewModel = tropesAndSubplotVm;
         _state = state;
+        _serviceProvider = serviceProvider;
 
         BindingContext = vm;
     }
@@ -32,4 +26,26 @@ public partial class BookResultsPage : ContentPage
         Navigation.PopToRootAsync();
     }
 
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+        var catalogService = _serviceProvider.GetRequiredService<CatalogService>();
+
+        var request = new BookSearchRequest
+        {
+            GenreIds = _state.SelectedGenreIds.ToList(),
+            Tropes = _state.SelectedTropeIds.ToList(),
+            Subplots = _state.SelectedSubplotIds.ToList()
+        };
+
+        RefreshResults(request);
+    }
+
+    private async void RefreshResults(BookSearchRequest request)
+    {
+        var catalogService = _serviceProvider.GetRequiredService<CatalogService>();
+        var books = await catalogService.SearchBooksAsync(request);
+        ViewModel.SetBooks(books);
+    }
 }

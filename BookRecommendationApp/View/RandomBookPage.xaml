@@ -15,6 +15,8 @@
                 StrokeThickness="0"
                 StrokeShape="RoundRectangle 20"
                 Padding="20"
+                MaximumHeightRequest="600"
+                MaximumWidthRequest="500"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Background="#2B303A"
@@ -22,8 +24,6 @@
 
             <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
                 <Image x:Name="FlipCover"
-                       HeightRequest="140"
-                       WidthRequest="210"
                        Aspect="AspectFill"
                        HorizontalOptions="Center" 
                        VerticalOptions="Center"

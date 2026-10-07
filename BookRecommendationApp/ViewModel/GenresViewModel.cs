@@ -79,6 +79,13 @@ namespace BookRecommendationApp.ViewModel
         public void ClearSelections()
         {
             _state.SelectedGenreIds.Clear();
+
+            foreach (var genre in Genres)
+            {
+                genre.IsSelected = false;
+            }
+
+            SelectedGenres.Clear();
         }
     }
 }

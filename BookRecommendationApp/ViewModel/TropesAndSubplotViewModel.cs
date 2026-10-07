@@ -92,14 +92,22 @@ namespace BookRecommendationApp.ViewModel
             trope.IsSelected = !trope.IsSelected;
 
             if (trope.IsSelected)
-            { 
+            {
                 if (!SelectedTropes.Contains(trope))
                 {
                     SelectedTropes.Add(trope);
                 }
+
+                if (!_state.SelectedTropeIds.Contains(trope.TropeId))
+                {
+                    _state.SelectedTropeIds.Add(trope.TropeId);
+                }
             }
             else
+            {
                 SelectedTropes.Remove(trope);
+                _state.SelectedTropeIds.Remove(trope.TropeId);
+            }
         }
 
         private void OnSubplotSelected(SubplotDto subplot)
@@ -115,15 +123,34 @@ namespace BookRecommendationApp.ViewModel
                 {
                     SelectedSubplots.Add(subplot);
                 }
+                if (!_state.SelectedSubplotIds.Contains(subplot.SubplotId))
+                {
+                    _state.SelectedSubplotIds.Add(subplot.SubplotId);
+                }
             }
             else
+            {
                 SelectedSubplots.Remove(subplot);
+                _state.SelectedSubplotIds.Remove(subplot.SubplotId);
+            }
         }
 
         public void ClearSelections()
         {
             _state.SelectedTropeIds.Clear();
             _state.SelectedSubplotIds.Clear();
+
+            foreach (var t in Tropes)
+            {
+                t.IsSelected = false;
+            }
+
+            foreach (var s in Subplots)
+            {
+                s.IsSelected = false;
+            }
+            SelectedTropes.Clear();
+            SelectedSubplots.Clear();
         }
     }
 }
