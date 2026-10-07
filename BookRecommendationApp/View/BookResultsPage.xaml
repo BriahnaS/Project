@@ -57,5 +57,14 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+        
+        <Button Text="Start Over"
+                BackgroundColor="#52796F"
+                TextColor="White"
+                CornerRadius="10"
+                Padding="15,10"
+                Margin="20"
+                HorizontalOptions="End"
+                Clicked="OnStartOverClicked"/>
     </Grid>
 </ContentPage>

@@ -37,6 +37,7 @@ public partial class GenresPage : ContentPage
         var nextPage = _serviceProvider.GetRequiredService<TropesAndSubplotsPage>();
 
         nextPage.ViewModel.SetSelectedGenres(_vm.SelectedGenres.ToList());
+        await nextPage.ViewModel.LoadAsync();
 
         await Navigation.PushAsync(nextPage);
     }
@@ -52,8 +53,8 @@ public partial class GenresPage : ContentPage
         var request = new BookSearchRequest
         {
             GenreIds = selectedGenres,
-            Tropes = new List<int>(), // You can fill this with selected tropes if needed
-            Subplots = new List<int>() // You can fill this with selected subplots if needed
+            Tropes = new List<int>(),
+            Subplots = new List<int>()
         };
 
         var books = await catalogService.SearchBooksAsync(request);
@@ -66,5 +67,15 @@ public partial class GenresPage : ContentPage
 
         // 6. Navigate normally
         await Navigation.PushAsync(resultsPage);
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+        foreach (var genre in _vm.Genres)
+        {
+            genre.IsSelected = _vm.SelectedGenres.Any(s=> s.GenreId == genre.GenreId);
+        }
     }
 }

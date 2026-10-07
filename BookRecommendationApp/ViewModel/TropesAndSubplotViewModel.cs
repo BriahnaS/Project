@@ -1,6 +1,7 @@
 ﻿using BookRecommendationApp.Model.Classes;
 using BookRecommendationApp.Services;
 using System;
+using BookRecommendationApp.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace BookRecommendationApp.ViewModel
     public class TropesAndSubplotViewModel : INotifyPropertyChanged
     {
         private readonly CatalogService _catalogService;
+
+        private readonly UserSelectionState _state;
         private List<GenreDto> _selectedGenres;
 
         public ObservableCollection<TropeDto> Tropes { get; } = new();
@@ -25,9 +28,12 @@ namespace BookRecommendationApp.ViewModel
         public ICommand SelectTropeCommand { get; }
         public ICommand SelectSubplotCommand { get; }
 
-        public TropesAndSubplotViewModel(CatalogService catalogService)
+        public bool HasLoadedOnce { get; private set; }
+
+        public TropesAndSubplotViewModel(CatalogService catalogService, UserSelectionState state)
         {
             _catalogService = catalogService;
+            _state = state;
             SelectTropeCommand = new Command<TropeDto>(OnTropeSelected);
             SelectSubplotCommand = new Command<SubplotDto>(OnSubplotSelected);
         }
@@ -45,39 +51,79 @@ namespace BookRecommendationApp.ViewModel
 
         public async Task LoadAsync()
         {
-            var genreIds = _selectedGenres.Select(g => g.GenreId).ToList();
+            HasLoadedOnce = true;
 
             Tropes.Clear();
             Subplots.Clear();
+            SelectedTropes.Clear();
+            SelectedSubplots.Clear();
+
+            var genreIds = _selectedGenres.Select(g => g.GenreId).ToList();
 
             var tropes = await _catalogService.GetGenreTropesAsync(genreIds);
             var subplots = await _catalogService.GetGenreSubplotsAsync(genreIds);
 
             foreach (var t in tropes)
+            {
+                t.IsSelected = _state.SelectedTropeIds.Contains(t.TropeId);
+                if (t.IsSelected)
+                {
+                    SelectedTropes.Add(t);
+                }
                 Tropes.Add(t);
+            }
 
             foreach (var s in subplots)
+            {
+                s.IsSelected = _state.SelectedSubplotIds.Contains(s.SubplotId);
+                if (s.IsSelected)
+                {
+                    SelectedSubplots.Add(s);
+                }
                 Subplots.Add(s);
+            }
         }
 
         private void OnTropeSelected(TropeDto trope)
         {
+            if (trope == null)
+                return;
+
             trope.IsSelected = !trope.IsSelected;
 
             if (trope.IsSelected)
-                SelectedTropes.Add(trope);
+            { 
+                if (!SelectedTropes.Contains(trope))
+                {
+                    SelectedTropes.Add(trope);
+                }
+            }
             else
                 SelectedTropes.Remove(trope);
         }
 
         private void OnSubplotSelected(SubplotDto subplot)
         {
+            if (subplot == null)
+                return;
+
             subplot.IsSelected = !subplot.IsSelected;
 
             if (subplot.IsSelected)
-                SelectedSubplots.Add(subplot);
+            {
+                if (!SelectedSubplots.Contains(subplot))
+                {
+                    SelectedSubplots.Add(subplot);
+                }
+            }
             else
                 SelectedSubplots.Remove(subplot);
+        }
+
+        public void ClearSelections()
+        {
+            _state.SelectedTropeIds.Clear();
+            _state.SelectedSubplotIds.Clear();
         }
     }
 }

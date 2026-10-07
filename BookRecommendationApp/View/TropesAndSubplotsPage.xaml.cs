@@ -13,8 +13,6 @@ public partial class TropesAndSubplotsPage : ContentPage
 		ViewModel = vm;
         _serviceProvider = serviceProvider;
         BindingContext = vm;
-
-		Loaded += async (_, _) => await vm.LoadAsync();
 	}
 
     private async void FindBooksClicked(object sender, EventArgs e)
@@ -46,5 +44,26 @@ public partial class TropesAndSubplotsPage : ContentPage
 
         // 6. Navigate normally
         await Navigation.PushAsync(resultsPage);
+    }
+
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+
+        if (!ViewModel.HasLoadedOnce)
+        {
+            await ViewModel.LoadAsync();
+        }
+
+        //Reapply for selections
+        foreach (var trope in ViewModel.Tropes)
+        {
+            trope.IsSelected = ViewModel.SelectedTropes.Any(s => s.TropeId == trope.TropeId);
+        }
+
+        foreach (var subplot in ViewModel.Subplots)
+        {
+            subplot.IsSelected = ViewModel.SelectedSubplots.Any(s => s.SubplotId == subplot.SubplotId);
+        }
     }
 }

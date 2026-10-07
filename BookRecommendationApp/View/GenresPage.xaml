@@ -18,7 +18,7 @@
                 <CollectionView ItemsSource="{Binding Genres}"
                                 SelectionMode="None"
                                 HorizontalOptions="Center">
-                    
+
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal" 
                                            ItemSpacing="8" />
@@ -26,12 +26,14 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
+                            <Grid>
                             <controls:Border 
                                 StrokeThickness="0"
                                 Background="#354F52"
                                 StrokeShape="RoundRectangle 20"
                                 Padding="8,4"
                                 Margin="4">
+
 
                                 <controls:Border.Style>
                                     <Style TargetType="controls:Border">
@@ -63,6 +65,7 @@
                                     </Grid.GestureRecognizers>
                                 </Grid>
                             </controls:Border>
+                            </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

@@ -5,6 +5,7 @@ using System.Net.Http;
 using BookRecommendationApp.ViewModel;
 using BookRecommendationApp.View;
 using CommunityToolkit.Maui;
+using BookRecommendationApp.Model;
 
 namespace BookRecommendationApp
 {
@@ -30,13 +31,19 @@ namespace BookRecommendationApp
                 client.BaseAddress = new Uri("https://localhost:7003/api/catalog/");
             });
             builder.Services.AddTransient<RandomBookViewModel>();
+
             builder.Services.AddTransient<MainPage>();
+
             builder.Services.AddTransient<GenresViewModel>();
             builder.Services.AddTransient<GenresPage>();
+
             builder.Services.AddTransient<TropesAndSubplotsPage>();
             builder.Services.AddTransient<TropesAndSubplotViewModel>();
+
             builder.Services.AddTransient<BookResultsPage>();
             builder.Services.AddTransient<BookResultsViewModel>();
+
+            builder.Services.AddSingleton<UserSelectionState>();
 
             return builder.Build();
         }

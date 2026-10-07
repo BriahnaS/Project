@@ -19,7 +19,8 @@
                 TextColor="Black"
                 HorizontalOptions="Center"/>
 
-                <CollectionView ItemsSource="{Binding Tropes}"
+                <CollectionView x:Name="TropesCollectionView" 
+                                ItemsSource="{Binding Tropes}"
                                 SelectionMode="None"
                                 HorizontalOptions="Center">
                     
@@ -78,7 +79,8 @@
                     HorizontalOptions="Center"
                     Margin="0,80,0,0"/>
                 
-                <CollectionView ItemsSource="{Binding Subplots}"
+                <CollectionView x:Name="SubplotsCollectionView" 
+                                ItemsSource="{Binding Subplots}"
                                 SelectionMode="None"
                                 HorizontalOptions="Center">
                     <CollectionView.ItemsLayout>
