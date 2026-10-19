@@ -66,6 +66,11 @@ Physical
 - Etc.
 
 # External Resources Required
-- N/A - book information will be hardcoded, unless Database or API is readily available
+- Self built relational database and API 
 
-# Planned Development Time: ~8-12 hours
+# AI Enhancement
+- Develop a similarity feature based on existing data
+- Utilize AI to connect similar tropes/subplots and enhance the similarity score
+- Build AI crawler to monitor publishers for new book data (release dates, titles, descriptions, etc.) which then runs the similarity method to determine if it would suit a user's interest
+
+# Planned Development Time: ~12-20 hours
