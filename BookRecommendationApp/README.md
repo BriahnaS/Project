@@ -1,13 +1,14 @@
 ﻿
 # Book Recommendation Tool/App
 
-- Progressively narrow down book recommendations based on user input on preferred Genres, Tropes, and Subplots, and display a list of books at the end (and blurbs, if time permits)
+- Progressively narrow down book recommendations based on user input on preferred Genres, Tropes, and Subplots, and display a list of books at the end with descriptions
 - Provide option to also randomly generate a book recommendation
-- Transform to Final Project (either add more features, or adapt an interactive, visually appealing user interface)
+- Implement AI enhancements for Similarity and Search functions
+
 # Language, Framework, and App Type
 * C#
 * .Net 10 
-* Console App
+* .NET MAUI Application
 
 # Custom Data Types
 ## Classes 
@@ -20,57 +21,67 @@
 - `Physical` 
 
 ## Methods
-- `Display menu (switches)`
-- `Get User Input`
-- `Sort/Refine List (LINQ filtering)`
-- `Search/Pull List of Recommendations`
-- `Generate Random Book`
+- `Genre selection`
+- `Trope/Subplot selection`
+- `API calls` to:
+    - `Pull List of Recommendations`
+    - `Generate Random Book`
+- `Next`
+- `Start Over`
+
 ## Properties
 Book
-- `Genre` (enum)
-- `Author` (string)
-- `Publisher` (string)
-- `Special Edition/Bonus Content` (bool)
-- `Subplot` (string)
+- `Genre` 
+- `Author` 
+- `Publisher` 
+- `Edition` 
+- `Subplot`
 
 AudioBook
-- `Narrator/s Names` (string)
+- `Narrator/s Names` 
 - `Single narrator` (bool)
 - `Duet Narration` (bool)
 - `Dual Narration` (bool)
 - `Graphic Audio` (bool)
 
 Physical 
-- `Type` *paperback/hardback* (enum)
+- `Type` *paperback/hardback* 
 
 
 # Preliminary Solution Structure
 ## Primary Data Structure
-- List of Objects of type book (maybe separate lists depending on type of book i.e. child classes)
+- List of Objects of type book 
 - Each user selection will implement LINQ filtering 
 
 ## Flow
-- Welcome and provide options (Build a Rec or Random)
-- Prompt for user input
-- Read input and proceed accordingly
-    - If Random is selected => Find a random book in the data and display
-    - If Build a Rec is selected => display genre menu (loop until user selects "Find Books" option)
-- Provide option to exit or start over
+- Welcome and provide options 
+    - Build-A-Rec
+    - Random
 
 ### Build a Rec Selected
-- Prompt for input
-- Read input and refine list of data behind the scenes
-- Display menu for genre specific subplots or tropes, or provide option to see list at the current level
-- Prompt for input 
-- Read input and further refine
-- Etc.
+- Select genres 
+    - Selected choices are highlighted and allow user to deselect them
+    - Either select "Find Your Books" or "Next"
+- "Next" navigates to trope and subplot selection
+    - Selected choices are highlighted and allow user to deselect them
+    - Select "Find Your Books"
+- "Find Your Books" calls the API with LINQ filtering based on the user's selections
+    - Clicking on the book itself with pop up a card that displays the description of the book
+- "Start Over" button brings user back to the welcome page
+
+### Random Selected
+- Navigate to another page with a flip card to display randomly pulled book from the database
 
 # External Resources Required
 - Self built relational database and API 
 
 # AI Enhancement
-- Develop a similarity feature based on existing data
-- Utilize AI to connect similar tropes/subplots and enhance the similarity score
 - Build AI crawler to monitor publishers for new book data (release dates, titles, descriptions, etc.) which then runs the similarity method to determine if it would suit a user's interest
+- Develop a similarity feature based on existing data
+    - Utilize AI to connect similar tropes/subplots and enhance the similarity score
+    - Run similarity feature when new book is added
+    - Also, be able to use similarity service for semantic search 
+- LLM Implementation
+    - Utilize Azure OpenAI to determine tone, audience, etc. which can then be stored in SQL 
 
 # Planned Development Time: ~12-20 hours
