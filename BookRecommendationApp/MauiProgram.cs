@@ -26,10 +26,18 @@ namespace BookRecommendationApp
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            builder.Services.AddHttpClient<IAuthService, AuthService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7003/");
+            });
             builder.Services.AddHttpClient<CatalogService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7003/api/catalog/");
             });
+
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<LoginPage>();
+
             builder.Services.AddTransient<RandomBookViewModel>();
             builder.Services.AddTransient<RandomBookPage>();
 
